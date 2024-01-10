@@ -1,5 +1,6 @@
 #include <iostream>
 #include <raylib.h>
+#include "CookieGeneratorClass.hpp"
 
 using namespace std;
 
