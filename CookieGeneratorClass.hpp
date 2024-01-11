@@ -17,11 +17,17 @@ class Generator{
 
     public:
 
-        Generator(string name, float startingCPS, float startingPrice){
+        /// @brief 
+        /// @param name 
+        /// @param startingCPS 
+        /// @param startingPrice 
+
+        Generator(string name, float startingCPS, float startingPrice){     
 
             this->name = name;
             CPS = startingCPS;
             price = startingPrice;
+            counter = 0;
 
         }
 
