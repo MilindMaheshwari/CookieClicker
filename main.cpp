@@ -45,7 +45,7 @@ int main()
     
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
     {
-        while(WindowShouldClose == false){
+        while(WindowShouldClose() == false){
 
             for(Generator generator : generators){ 
 
