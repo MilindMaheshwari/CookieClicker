@@ -16,10 +16,24 @@ void moneyGeneratingLoop(){
 
 vector<Generator> generators; //DONT USE GLOBAL VARIABLES
 
-int main () {
 
-    const int screenWidth = 800;
-    const int screenHeight = 600;
+
+
+
+
+
+
+
+int main()
+{   
+    int shopBoxWidth = 125;
+    int shopBoxHeight = 320;
+    int dispBoxWidth = 925;
+    int dispBoxHeight = 128;
+    const int screenWidth = 1920;
+    const int screenHeight = 1080;
+
+
 
     long long money;
 
@@ -49,17 +63,38 @@ int main () {
     cout << "Hello World" << endl;
 
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
+    
+
+    Texture2D texture = LoadTexture("X:/My Drive/Smithmas 2/Unit Project/CookieClicker/AssetLibrary/Shane1.png");
+
     SetTargetFPS(60);
 
-    while (WindowShouldClose() == false){
+    while (WindowShouldClose() == false)
+    {
+        
+
+
+        // Draw
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        DrawRectangle(590, 161, dispBoxWidth, dispBoxHeight, RED);
+        int shaneVar = 5;
+        for (int i = 0; i < 20; i++)
+        {
+            shaneVar *=-1;
+            DrawTexture(texture, 590 + i*40, 175 + shaneVar, WHITE);
+        }
+        // Draw the texture at the center of the screen
+       
 
 
 
-    
+        
+
+        EndDrawing();
     }
 
     CloseWindow();
+    UnloadTexture(texture);
     return 0;
 }
-
-
