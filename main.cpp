@@ -26,8 +26,8 @@ vector<Generator> generators; //DONT USE GLOBAL VARIABLES
 
 int main()
 {   
-    int shopBoxWidth = 125;
-    int shopBoxHeight = 320;
+    int shopBoxWidth = 300;
+    int shopBoxHeight = 128;
     int dispBoxWidth = 925;
     int dispBoxHeight = 128;
     const int screenWidth = 1920;
@@ -45,7 +45,7 @@ int main()
     
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
     {
-        while(WindowShouldClose == false){
+        while(WindowShouldClose() == false){
 
             for(Generator generator : generators){ 
 
@@ -65,7 +65,7 @@ int main()
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
     
 
-    Texture2D texture = LoadTexture("X:/My Drive/Smithmas 2/Unit Project/CookieClicker/AssetLibrary/Shane1.png");
+    Texture2D texture = LoadTexture("AssetLibrary/Shane1.png");
 
     SetTargetFPS(60);
 
@@ -77,11 +77,26 @@ int main()
         // Draw
         BeginDrawing();
         ClearBackground(RAYWHITE);
+
+        //Draw Display Boxes
         DrawRectangle(590, 161, dispBoxWidth, dispBoxHeight, RED);
+        DrawRectangle(590, 161 + dispBoxHeight, dispBoxWidth, dispBoxHeight, BLUE);
+        DrawRectangle(590, 161 + dispBoxHeight*2, dispBoxWidth, dispBoxHeight, YELLOW);
+        DrawRectangle(590, 161 + dispBoxHeight*3, dispBoxWidth, dispBoxHeight, RED);
+        DrawRectangle(590, 161 + dispBoxHeight*4, dispBoxWidth, dispBoxHeight, BLUE);
+
+        //Draw Shop Boxes
+        DrawRectangle(1545, 161, shopBoxWidth, shopBoxHeight, MAROON);
+        DrawRectangle(1545, 161 + dispBoxHeight, shopBoxWidth, shopBoxHeight, DARKBLUE);
+        DrawRectangle(1545, 161 + dispBoxHeight*2, shopBoxWidth, shopBoxHeight, GOLD);
+        DrawRectangle(1545, 161 + dispBoxHeight*3, shopBoxWidth, shopBoxHeight, MAROON);
+        DrawRectangle(1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight, DARKBLUE);
+
         int shaneVar = 5;
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 22; i++)
         {
             shaneVar *=-1;
+            if (i < shane.getCounter())
             DrawTexture(texture, 590 + i*40, 175 + shaneVar, WHITE);
         }
         // Draw the texture at the center of the screen
