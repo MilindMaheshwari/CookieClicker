@@ -18,7 +18,7 @@ int main()
 
 
 
-    long long money;
+    long long money = 0;
 
 
     Generator cursor("Cursor", 0.2, 10);
@@ -26,6 +26,18 @@ int main()
 
     vector<Generator> generators{cursor, shane};
     
+
+
+
+
+
+    cout << "Hello World" << endl;
+
+    InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
+    SetTargetFPS(60);
+
+
+
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
     {
         while(WindowShouldClose() == false){
@@ -35,8 +47,8 @@ int main()
                 money += generator.getTotalCPS();   
 
             }
-            cout << money;
-            sleep(1000); //After it has increased money from all generators, pause for one second
+            cout << money << endl;
+            sleep(1); //After it has increased money from all generators, pause for one second
         }
     }); //For generating money while other stuff is happening
 
