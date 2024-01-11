@@ -7,23 +7,6 @@
 
 using namespace std;
 
-
-void moneyGeneratingLoop(){
-
-
-
-}
-
-vector<Generator> generators; //DONT USE GLOBAL VARIABLES
-
-
-
-
-
-
-
-
-
 int main()
 {   
     int shopBoxWidth = 300;
