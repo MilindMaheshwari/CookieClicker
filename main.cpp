@@ -1,18 +1,50 @@
 #include <iostream>
+#include <unistd.h>
 #include <raylib.h>
+#include <thread> 
+#include <vector>
 #include "CookieGeneratorClass.hpp"
 
 using namespace std;
+
+
+void moneyGeneratingLoop(){
+
+
+
+}
+
+vector<Generator> generators; //DONT USE GLOBAL VARIABLES
 
 int main () {
 
     const int screenWidth = 800;
     const int screenHeight = 600;
-    int ball_x = 100;
-    int ball_y = 100;
-    int ball_speed_x = 5;
-    int ball_speed_y = 5;
-    int ball_radius = 15;
+
+    long long money;
+
+
+    Generator cursor("Cursor", 0.2, 10);
+    Generator shane("Shane", 3, 100);
+
+    vector<Generator> generators{cursor, shane};
+    
+    thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
+    {
+        while(WindowShouldClose == false){
+
+            for(Generator generator : generators){ 
+
+                money += generator.getTotalCPS();   
+
+            }
+            cout << money;
+            sleep(1000); //After it has increased money from all generators, pause for one second
+        }
+    }); //For generating money while other stuff is happening
+
+
+
 
     cout << "Hello World" << endl;
 
@@ -20,25 +52,14 @@ int main () {
     SetTargetFPS(60);
 
     while (WindowShouldClose() == false){
-        BeginDrawing();
-        ClearBackground(BLACK);
-        ball_x += ball_speed_x;
-        ball_y += ball_speed_y;
 
-        if(ball_x + ball_radius >= screenWidth  || ball_x - ball_radius <= 0)
-        {
-            ball_speed_x *= -1;
-        }
 
-        if(ball_y + ball_radius >= screenHeight  || ball_y - ball_radius <= 0)
-        {
-            ball_speed_y *= -1;
-        }
 
-        DrawCircle(ball_x,ball_y,ball_radius, WHITE);
-        EndDrawing();
+    
     }
 
     CloseWindow();
     return 0;
 }
+
+
