@@ -48,7 +48,9 @@ int main()
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
     
 
-    Texture2D texture = LoadTexture("X:/My Drive/Smithmas 2/Unit Project/CookieClicker/AssetLibrary/Shane1.png");
+    // Texture2D texture = LoadTexture("X:/My Drive/Smithmas 2/Unit Project/CookieClicker/AssetLibrary/Shane1.png");
+    Texture2D texture = LoadTexture("AssetLibrary\\Shane1.png");
+
 
     SetTargetFPS(60);
 
@@ -62,7 +64,7 @@ int main()
         ClearBackground(RAYWHITE);
         DrawRectangle(590, 161, dispBoxWidth, dispBoxHeight, RED);
         int shaneVar = 5;
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 22; i++)
         {
             shaneVar *=-1;
             DrawTexture(texture, 590 + i*40, 175 + shaneVar, WHITE);
