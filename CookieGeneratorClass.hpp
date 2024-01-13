@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
+#include <raylib.h>
 
 #pragma once
 
 using namespace std;
-
 
 class Generator{
 
@@ -13,6 +13,7 @@ class Generator{
         float CPS;  //Cookies/Clicks per second
         float price;
         int counter;
+        Rectangle buyBox;
 
 
     public:
@@ -43,7 +44,7 @@ class Generator{
         }
 
         int getUnitCPS(){   //How much just one unit produces
-
+            return CPS;
         }
 
         int getCounter(){        
@@ -54,9 +55,16 @@ class Generator{
             return price;
         }
 
+        void setBuyBox(Rectangle rec){
+            buyBox = rec;
+        }
 
-
-
+        bool getClicked(){
+            
+            bool clicked = CheckCollisionPointRec(GetMousePosition(), buyBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+            if(clicked)  buyNew();
+            return (CheckCollisionPointRec(GetMousePosition(), buyBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT));
+        }
 };
 
 // class Cursor : Generator{
