@@ -56,22 +56,32 @@ int main()
 
 
     cout << "Hello World" << endl;
-
-    InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
     
 
-    Texture2D texture = LoadTexture("AssetLibrary/Shane1.png");
+    Texture2D imageShane = LoadTexture("X:/My Drive/Smithmas 2/Unit Project/CookieClicker/AssetLibrary/Shane1.png");
+    Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
+    
+    Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
+    Rectangle oakCollisionBox = {168, 329, static_cast<float>(imageOak.width), static_cast<float>(imageOak.height)};
 
-    SetTargetFPS(60);
+    bool collision = false;
 
     while (WindowShouldClose() == false)
     {
         
+        collision = CheckCollisionPointRec(GetMousePosition(), clickBox);
+
+
+
+
 
 
         // Draw
         BeginDrawing();
         ClearBackground(RAYWHITE);
+
+        //Draw Counters
+        DrawText(to_string(money).c_str(), 150, 150, 40, BLUE);
 
         //Draw Display Boxes
         DrawRectangle(590, 161, dispBoxWidth, dispBoxHeight, RED);
@@ -88,14 +98,22 @@ int main()
         DrawRectangle(1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight, DARKBLUE);
 
         int shaneVar = 5;
-        for (int i = 0; i < 22; i++)
+        for (int i = 0; i < shane.getCounter(); i++)
         {
             shaneVar *=-1;
-            if (i < shane.getCounter())
-            DrawTexture(texture, 590 + i*40, 175 + shaneVar, WHITE);
-        }
+            
+            DrawTexture(imageShane, 590 + i*40, 175 + shaneVar, WHITE);
+        }   
         // Draw the texture at the center of the screen
-       
+        DrawTexture(imageOak, oakCollisionBox.x, oakCollisionBox.y, WHITE);
+        
+
+        
+        if (CheckCollisionPointRec(GetMousePosition(), oakCollisionBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        {
+            // Handle collision behavior here (e.g., increase money, perform some action, etc.)
+            money++; // Adjust this according to your requirements
+        }
 
 
 
@@ -105,6 +123,7 @@ int main()
     }
 
     CloseWindow();
-    UnloadTexture(texture);
+    UnloadTexture(imageShane);
+    UnloadTexture(imageOak);
     return 0;
 }
