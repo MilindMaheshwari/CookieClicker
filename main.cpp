@@ -16,14 +16,9 @@ int main()
     const int screenWidth = 1920;
     const int screenHeight = 1080;
 
-    long long money = 0;
-
-
-    Generator cursor("Cursor", 0.2, 10);
-    Generator shane("Shane", 3, 100);
+    unsigned long long money = 0;
 
     //COULD FIND OTHER SOLUTION FOR THIS
-    vector<Generator*> generators{&cursor, &shane}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
     SetTargetFPS(60);
@@ -40,8 +35,12 @@ int main()
     Rectangle fourthBuyBox = {1545, 161 + dispBoxHeight*3, shopBoxWidth, shopBoxHeight};
     Rectangle fifthBuyBox = {1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight};
 
-    cursor.setBuyBox(secondBuyBox);
-    shane.setBuyBox(shaneBuyBox);
+    Generator cursor("Cursor", 0.2, 10, blueDispBox, secondBuyBox, BLUE, DARKBLUE);
+    Generator shane("Shane", 3, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
+    
+    
+
+    vector<Generator*> generators{&cursor, &shane}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
     {
@@ -60,9 +59,12 @@ int main()
 
 
     Texture2D texture = LoadTexture("AssetLibrary/Shane1.png");
-    shane.buyNew();
-    shane.buyNew();
-    shane.buyNew(); 
+
+    unsigned long long tempMoney = 8000;
+
+    shane.buyNew(tempMoney);
+    shane.buyNew(tempMoney);
+    shane.buyNew(tempMoney); 
 
     while (WindowShouldClose() == false)
     {
@@ -73,22 +75,11 @@ int main()
 
         //Draw Display Boxes
 
-        DrawRectangleRec(shaneDispBox, RED);
-        DrawRectangleRec(blueDispBox, BLUE);
-        DrawRectangleRec(thirdDispBox, YELLOW);
-        DrawRectangleRec(fourthDispBox, RED);
-        DrawRectangleRec(fifthDispBox, BLUE);
-
-        if(shane.getClicked()){
-            money++;
-        }
+        shane.displayBoxes(money);
+        cursor.displayBoxes(money);
 
         //Draw Shop Boxes
-        DrawRectangleRec(shaneBuyBox, MAROON);
-        DrawRectangleRec(secondBuyBox, DARKBLUE);
-        DrawRectangleRec(thirdBuyBox, GOLD);
-        DrawRectangleRec(fourthBuyBox, MAROON);
-        DrawRectangleRec(fifthBuyBox, DARKBLUE);
+       
 
         DrawText(to_string(money).c_str(), 50, 50, 34, RED);
 
@@ -109,9 +100,6 @@ int main()
             }
 
         }
-
-
-        
 
         EndDrawing();
     }
