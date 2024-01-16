@@ -35,7 +35,7 @@ int main()
     Rectangle fourthBuyBox = {1545, 161 + dispBoxHeight*3, shopBoxWidth, shopBoxHeight};
     Rectangle fifthBuyBox = {1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight};
 
-    Generator cursor("Cursor", 0.2, 10, blueDispBox, secondBuyBox, BLUE, DARKBLUE);
+    Generator cursor("Cursor", 0.2, 10, blueDispBox, cursorBuyBox, BLUE, DARKBLUE);
     Generator shane("Shane", 3, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
     
     
