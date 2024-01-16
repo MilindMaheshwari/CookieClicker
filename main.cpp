@@ -16,7 +16,7 @@ int main()
     const int screenWidth = 1920;
     const int screenHeight = 1080;
 
-    double money = 0;
+    double money = 0;   //Should print with 2 decimals, like money usually is
     double totalCPS = 0;
 
     //COULD FIND OTHER SOLUTION FOR THIS
