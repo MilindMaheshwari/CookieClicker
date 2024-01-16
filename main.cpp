@@ -23,8 +23,8 @@ int main()
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
     SetTargetFPS(60);
     
-    Rectangle shaneDispBox = {590, 161, dispBoxWidth, dispBoxHeight};
-    Rectangle blueDispBox = {590, 161 + dispBoxHeight, dispBoxWidth, dispBoxHeight};
+    Rectangle cursorDispBox = {590, 161, dispBoxWidth, dispBoxHeight};
+    Rectangle shaneDispBox = {590, 161 + dispBoxHeight, dispBoxWidth, dispBoxHeight};
     Rectangle thirdDispBox = {590, 161 + dispBoxHeight*2, dispBoxWidth, dispBoxHeight};
     Rectangle fourthDispBox = {590, 161 + dispBoxHeight*3, dispBoxWidth, dispBoxHeight};
     Rectangle fifthDispBox = {590, 161 + dispBoxHeight*4, dispBoxWidth, dispBoxHeight};
@@ -35,7 +35,7 @@ int main()
     Rectangle fourthBuyBox = {1545, 161 + dispBoxHeight*3, shopBoxWidth, shopBoxHeight};
     Rectangle fifthBuyBox = {1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight};
 
-    Generator cursor("Cursor", 0.2, 10, blueDispBox, cursorBuyBox, BLUE, DARKBLUE);
+    Generator cursor("Cursor", 0.2, 10, cursorDispBox, cursorBuyBox, BLUE, DARKBLUE);
     Generator shane("Shane", 3, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
     
     
@@ -63,7 +63,7 @@ int main()
     cout << "Hello World" << endl;
     
 
-    Texture2D imageShane = LoadTexture("X:/My Drive/Smithmas 2/Unit Project/CookieClicker/AssetLibrary/Shane1.png");
+    Texture2D imageShane = LoadTexture("AssetLibrary/Shane1.png");
     Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
     Texture2D imageCursor = LoadTexture("AssetLibrary/cursor.png");
     
@@ -109,9 +109,6 @@ int main()
         DrawText(to_string(money).c_str(), 50, 50, 34, RED);
 
         int shaneVar = 5;
-        for (int i = 0; i < shane.getCounter(); i++)
-
-        DrawText(to_string(money).c_str(), 50, 50, 34, RED);
 
         int dispVar = 5;
         for (int i = 0; i < cursor.getCounter(); i++)
