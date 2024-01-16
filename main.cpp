@@ -34,13 +34,13 @@ int main()
     Rectangle fourthDispBox = {590, 161 + dispBoxHeight*3, dispBoxWidth, dispBoxHeight};
     Rectangle fifthDispBox = {590, 161 + dispBoxHeight*4, dispBoxWidth, dispBoxHeight};
 
-    Rectangle shaneBuyBox = {1545, 161, shopBoxWidth, shopBoxHeight};
-    Rectangle secondBuyBox = {1545, 161 + dispBoxHeight, shopBoxWidth, shopBoxHeight};
+    Rectangle cursorBuyBox = {1545, 161, shopBoxWidth, shopBoxHeight};
+    Rectangle shaneBuyBox = {1545, 161 + dispBoxHeight, shopBoxWidth, shopBoxHeight};
     Rectangle thirdBuyBox = {1545, 161 + dispBoxHeight*2, shopBoxWidth, shopBoxHeight};
     Rectangle fourthBuyBox = {1545, 161 + dispBoxHeight*3, shopBoxWidth, shopBoxHeight};
     Rectangle fifthBuyBox = {1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight};
 
-    cursor.setBuyBox(secondBuyBox);
+    cursor.setBuyBox(cursorBuyBox);
     shane.setBuyBox(shaneBuyBox);
 
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
@@ -66,17 +66,14 @@ int main()
 
     Texture2D imageShane = LoadTexture("X:/My Drive/Smithmas 2/Unit Project/CookieClicker/AssetLibrary/Shane1.png");
     Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
+    Texture2D imageCursor = LoadTexture("AssetLibrary/cursor.png");
     
     Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
     Rectangle oakCollisionBox = {168, 329, static_cast<float>(imageOak.width), static_cast<float>(imageOak.height)};
 
 
     bool collision = false;
-    Texture2D texture = LoadTexture("AssetLibrary/Shane1.png");
-    shane.buyNew();
-    shane.buyNew();
-    shane.buyNew(); 
-
+     
     while (WindowShouldClose() == false)
     {
         
@@ -101,27 +98,43 @@ int main()
         DrawRectangleRec(thirdDispBox, YELLOW);
         DrawRectangleRec(fourthDispBox, RED);
         DrawRectangleRec(fifthDispBox, BLUE);
+    
+        cursor.getClicked();
+        shane.getClicked();
+        
 
-        if(shane.getClicked()){
-            money++;
-        }
 
         //Draw Shop Boxes
-        DrawRectangleRec(shaneBuyBox, MAROON);
-        DrawRectangleRec(secondBuyBox, DARKBLUE);
+        DrawRectangleRec(cursorBuyBox, MAROON);
+        DrawRectangleRec(shaneBuyBox, DARKBLUE);
         DrawRectangleRec(thirdBuyBox, GOLD);
         DrawRectangleRec(fourthBuyBox, MAROON);
         DrawRectangleRec(fifthBuyBox, DARKBLUE);
 
         DrawText(to_string(money).c_str(), 50, 50, 34, RED);
 
-        int shaneVar = 5;
-        for (int i = 0; i < shane.getCounter(); i++)
+        int dispVar = 5;
+        for (int i = 0; i < cursor.getCounter(); i++)
         {
-            shaneVar *=-1;
-            
-            DrawTexture(imageShane, 590 + i*40, 175 + shaneVar, WHITE);
+                dispVar *=-1;
+                if (i < 23)
+                {
+                    DrawTexture(imageCursor, 590 + i*40, 175 + dispVar, WHITE);
+                }
+                else if (i < 46)
+                {
+                    DrawTexture(imageCursor, 590 + i*40, 185 + dispVar, WHITE);
+                }
         }   
+        for (int j = 0; j < shane.getCounter(); j++)
+        {
+            dispVar *=-1;
+            if (j < 22)
+            {
+                DrawTexture(imageShane, 590 + j*40, 175 + dispBoxHeight + dispVar, WHITE);
+            }
+        }
+        
         // Draw the texture at the center of the screen
         DrawTexture(imageOak, oakCollisionBox.x, oakCollisionBox.y, WHITE);
         
