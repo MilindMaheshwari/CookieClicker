@@ -16,7 +16,8 @@ int main()
     const int screenWidth = 1920;
     const int screenHeight = 1080;
 
-    unsigned long long money = 0;
+    double money = 0;
+    double totalCPS = 0;
 
     //COULD FIND OTHER SOLUTION FOR THIS
 
@@ -48,10 +49,9 @@ int main()
 
             for(Generator* generator : generators){ 
                 
-                money += generator->getTotalCPS();   
+                money += generator->getGeneratorTotalCPS();   
 
             }
-            cout << money << endl;
 
             sleep(1); //After it has increased money from all generators, pause for one second
         }
@@ -75,7 +75,7 @@ int main()
      
     Texture2D texture = LoadTexture("AssetLibrary/Shane1.png");
 
-    unsigned long long tempMoney = 8000;
+    double tempMoney = 8000;
 
     shane.buyNew(tempMoney);
     shane.buyNew(tempMoney);
@@ -87,16 +87,20 @@ int main()
         collision = CheckCollisionPointRec(GetMousePosition(), clickBox);
 
 
+        totalCPS = 0;
+        for(Generator* generator : generators){ 
+            
+            totalCPS += generator->getGeneratorTotalCPS();
+        }
 
-
-
+        DrawText(TextFormat("%.2f", totalCPS), 30, 30, 22, GREEN);
 
         // Draw
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
         //Draw Counters
-        DrawText(to_string(money).c_str(), 150, 150, 40, BLUE);
+        DrawText(TextFormat("%.2f", money), 150, 150, 40, BLUE);
 
         //Draw Display Boxes
 
@@ -106,7 +110,7 @@ int main()
         //Draw Shop Boxes
        
 
-        DrawText(to_string(money).c_str(), 50, 50, 34, RED);
+        DrawText(TextFormat("%.2f", money), 50, 50, 34, RED);
 
         int shaneVar = 5;
 
@@ -140,10 +144,6 @@ int main()
             // Handle collision behavior here (e.g., increase money, perform some action, etc.)
             money++; // Adjust this according to your requirements
         }
-
-
-
-        
 
         EndDrawing();
     }

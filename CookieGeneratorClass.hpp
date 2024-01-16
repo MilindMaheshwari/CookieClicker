@@ -10,8 +10,8 @@ class Generator{
 
     private: 
         string name;        
-        float CPS;  //Cookies/Clicks per second
-        float price;
+        double CPS;  //Cookies/Clicks per second
+        double price;
         int counter;
         Rectangle dispBox;
         Rectangle buyBox;
@@ -43,7 +43,7 @@ class Generator{
 
         }
 
-        void buyNew(unsigned long long &money){
+        void buyNew(double &money){
 
             counter++;  
             money -= price;
@@ -51,7 +51,7 @@ class Generator{
         }
 
 
-        int getTotalCPS(){  //How many CPS this type of generator is generating in total
+        double getGeneratorTotalCPS(){  //How many CPS this type of generator is generating in total
             return CPS * counter;
         }
 
@@ -71,19 +71,19 @@ class Generator{
             buyBox = rec;
         }
 
-        bool getClicked(unsigned long long &money){
+        bool getClicked(double &money){
             
             bool clicked = CheckCollisionPointRec(GetMousePosition(), buyBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
             if(clicked)  buyNew(money);
             return (CheckCollisionPointRec(GetMousePosition(), buyBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT));
         }
 
-        bool getAffordable(unsigned long long money){
+        bool getAffordable(double money){
 
             return (money >=  price);   //Returns true if the user has enough money to buy the product
         }
 
-        void displayBoxes(unsigned long long &money){
+        void displayBoxes(double &money){
 
             DrawRectangleRec(dispBox, canBuyColor);
             
