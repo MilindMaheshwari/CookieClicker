@@ -123,7 +123,7 @@ int main()
                 }
                 else if (i < 46)
                 {
-                    DrawTexture(imageCursor, 590 + i*40, 185 + dispVar, WHITE);
+                    DrawTexture(imageCursor, 590 + i*40 - 23*40, 205 + dispVar*-1, WHITE);
                 }
         }   
         for (int j = 0; j < shane.getCounter(); j++)
