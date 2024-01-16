@@ -110,6 +110,9 @@ int main()
         DrawRectangleRec(thirdBuyBox, GOLD);
         DrawRectangleRec(fourthBuyBox, MAROON);
         DrawRectangleRec(fifthBuyBox, DARKBLUE);
+        
+        int shaneVar = 5;
+        for (int i = 0; i < shane.getCounter(); i++)
 
         DrawText(to_string(money).c_str(), 50, 50, 34, RED);
 
@@ -137,8 +140,6 @@ int main()
         
         // Draw the texture at the center of the screen
         DrawTexture(imageOak, oakCollisionBox.x, oakCollisionBox.y, WHITE);
-        
-
         
         if (CheckCollisionPointRec(GetMousePosition(), oakCollisionBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
