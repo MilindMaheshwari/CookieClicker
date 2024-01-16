@@ -98,6 +98,7 @@ class Generator{
 
             DrawText("Buy", buyBox.x, buyBox.y, 22, WHITE);
             DrawText(TextFormat("%.2f", price), buyBox.x+50, buyBox.y, 22, GREEN);
+            DrawText(TextFormat("x%d", counter), buyBox.x+150, buyBox.y, 22, DARKGRAY);
 
 
 
