@@ -16,6 +16,8 @@ int main()
     const int screenWidth = 1920;
     const int screenHeight = 1080;
 
+    double money = 0;   //Should print with 2 decimals, like money usually is
+    double totalCPS = 0;
     unsigned long long money = 1000000000;
 
     //COULD FIND OTHER SOLUTION FOR THIS
@@ -23,8 +25,8 @@ int main()
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
     SetTargetFPS(60);
     
-    Rectangle shaneDispBox = {590, 161, dispBoxWidth, dispBoxHeight};
-    Rectangle blueDispBox = {590, 161 + dispBoxHeight, dispBoxWidth, dispBoxHeight};
+    Rectangle cursorDispBox = {590, 161, dispBoxWidth, dispBoxHeight};
+    Rectangle shaneDispBox = {590, 161 + dispBoxHeight, dispBoxWidth, dispBoxHeight};
     Rectangle thirdDispBox = {590, 161 + dispBoxHeight*2, dispBoxWidth, dispBoxHeight};
     Rectangle fourthDispBox = {590, 161 + dispBoxHeight*3, dispBoxWidth, dispBoxHeight};
     Rectangle fifthDispBox = {590, 161 + dispBoxHeight*4, dispBoxWidth, dispBoxHeight};
@@ -35,7 +37,7 @@ int main()
     Rectangle fourthBuyBox = {1545, 161 + dispBoxHeight*3, shopBoxWidth, shopBoxHeight};
     Rectangle fifthBuyBox = {1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight};
 
-    Generator cursor("Cursor", 0.2, 10, blueDispBox, cursorBuyBox, BLUE, DARKBLUE);
+    Generator cursor("Cursor", 0.2, 10, cursorDispBox, cursorBuyBox, BLUE, DARKBLUE);
     Generator shane("Shane", 1, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
     Generator sweater("Offbrand Merch", 3, 500, thirdDispBox, thirdBuyBox, YELLOW, GOLD);
     
@@ -48,10 +50,9 @@ int main()
 
             for(Generator* generator : generators){ 
                 
-                money += generator->getTotalCPS();   
+                money += generator->getGeneratorTotalCPS();   
 
             }
-            cout << money << endl;
 
             sleep(1); //After it has increased money from all generators, pause for one second
         }
@@ -63,7 +64,7 @@ int main()
     cout << "Hello World" << endl;
     
 
-    Texture2D imageShane = LoadTexture("X:/My Drive/Smithmas 2/Unit Project/CookieClicker/AssetLibrary/Shane1.png");
+    Texture2D imageShane = LoadTexture("AssetLibrary/Shane1.png");
     Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
     Texture2D imageCursor = LoadTexture("AssetLibrary/cursor.png");
     Texture2D imageSweater = LoadTexture("AssetLibrary/sweater.png");
@@ -76,7 +77,7 @@ int main()
      
     Texture2D texture = LoadTexture("AssetLibrary/Shane1.png");
 
-    unsigned long long tempMoney = 8000;
+    double tempMoney = 8000;
 
     shane.buyNew(tempMoney);
     shane.buyNew(tempMoney);
@@ -88,16 +89,20 @@ int main()
         collision = CheckCollisionPointRec(GetMousePosition(), clickBox);
 
 
+        totalCPS = 0;
+        for(Generator* generator : generators){ 
+            
+            totalCPS += generator->getGeneratorTotalCPS();
+        }
 
-
-
+        DrawText(TextFormat("%.2f", totalCPS), 30, 30, 22, GREEN);
 
         // Draw
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
         //Draw Counters
-        DrawText(to_string(money).c_str(), 150, 150, 40, BLUE);
+        DrawText(TextFormat("%.2f", money), 150, 150, 40, BLUE);
 
         //Draw Display Boxes
 
@@ -106,7 +111,11 @@ int main()
         sweater.displayBoxes(money);
 
         //Draw Shop Boxes
-        DrawText(to_string(money).c_str(), 50, 50, 34, RED);
+       
+
+        DrawText(TextFormat("%.2f", money), 50, 50, 34, RED);
+
+        int shaneVar = 5;
 
         int dispVar = 5;
         for (int i = 0; i < cursor.getCounter(); i++)
@@ -146,10 +155,6 @@ int main()
             // Handle collision behavior here (e.g., increase money, perform some action, etc.)
             money++; // Adjust this according to your requirements
         }
-
-
-
-        
 
         EndDrawing();
     }
