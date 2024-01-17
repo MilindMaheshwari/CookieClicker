@@ -37,9 +37,10 @@ int main()
     Generator cursor("Cursor", 1, 10, cursorDispBox, cursorBuyBox, BLUE, DARKBLUE);
     Generator shane("Shane", 2, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
     Generator sweater("Offbrand Merch", 20, 500, thirdDispBox, thirdBuyBox, YELLOW, GOLD);
+
     
 
-    vector<Generator*> generators{&cursor, &shane}; //Has to be pointer so that changes to shane/cursor actually affect the vector
+    vector<Generator*> generators{&cursor, &shane, &sweater}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
     {
