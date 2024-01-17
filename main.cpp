@@ -16,7 +16,7 @@ int main()
     const int screenWidth = 1920;
     const int screenHeight = 1080;
 
-    unsigned long long money = 0;
+    unsigned long long money = 1000000000;
 
     //COULD FIND OTHER SOLUTION FOR THIS
 
@@ -35,9 +35,9 @@ int main()
     Rectangle fourthBuyBox = {1545, 161 + dispBoxHeight*3, shopBoxWidth, shopBoxHeight};
     Rectangle fifthBuyBox = {1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight};
 
-    Generator cursor("Cursor", 0.2, 10, blueDispBox, secondBuyBox, BLUE, DARKBLUE);
-    Generator shane("Shane", 3, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
-    
+    Generator cursor("Cursor", 0.2, 10, blueDispBox, cursorBuyBox, BLUE, DARKBLUE);
+    Generator shane("Shane", 1, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
+    Generator sweater("Offbrand Merch", 3, 500, thirdDispBox, thirdBuyBox, YELLOW, GOLD);
     
 
     vector<Generator*> generators{&cursor, &shane}; //Has to be pointer so that changes to shane/cursor actually affect the vector
@@ -66,6 +66,7 @@ int main()
     Texture2D imageShane = LoadTexture("X:/My Drive/Smithmas 2/Unit Project/CookieClicker/AssetLibrary/Shane1.png");
     Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
     Texture2D imageCursor = LoadTexture("AssetLibrary/cursor.png");
+    Texture2D imageSweater = LoadTexture("AssetLibrary/sweater.png");
     
     Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
     Rectangle oakCollisionBox = {168, 329, static_cast<float>(imageOak.width), static_cast<float>(imageOak.height)};
@@ -102,15 +103,9 @@ int main()
 
         shane.displayBoxes(money);
         cursor.displayBoxes(money);
+        sweater.displayBoxes(money);
 
         //Draw Shop Boxes
-       
-
-        DrawText(to_string(money).c_str(), 50, 50, 34, RED);
-
-        int shaneVar = 5;
-        for (int i = 0; i < shane.getCounter(); i++)
-
         DrawText(to_string(money).c_str(), 50, 50, 34, RED);
 
         int dispVar = 5;
@@ -123,7 +118,7 @@ int main()
                 }
                 else if (i < 46)
                 {
-                    DrawTexture(imageCursor, 590 + i*40 - 23*40, 205 + dispVar*-1, WHITE);
+                    DrawTexture(imageCursor, 590 + i*40 - 23*40, 255 + dispVar*-1, WHITE);
                 }
         }   
         for (int j = 0; j < shane.getCounter(); j++)
@@ -132,6 +127,14 @@ int main()
             if (j < 22)
             {
                 DrawTexture(imageShane, 590 + j*40, 175 + dispBoxHeight + dispVar, WHITE);
+            }
+        }
+        for (int k = 0; k < sweater.getCounter(); k++)
+        {
+            dispVar *=-1;
+            if (k < 25)
+            {
+                DrawTexture(imageSweater, 590 + k*40, 175 + dispBoxHeight*2 + dispVar, WHITE);
             }
         }
         
