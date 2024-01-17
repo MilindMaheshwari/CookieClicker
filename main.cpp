@@ -16,11 +16,8 @@ int main()
     const int screenWidth = 1920;
     const int screenHeight = 1080;
 
-    double money = 0;   //Should print with 2 decimals, like money usually is
+    double money = 10000;   //Should print with 2 decimals, like money usually is
     double totalCPS = 0;
-    unsigned long long money = 1000000000;
-
-    //COULD FIND OTHER SOLUTION FOR THIS
 
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
     SetTargetFPS(60);
@@ -37,9 +34,9 @@ int main()
     Rectangle fourthBuyBox = {1545, 161 + dispBoxHeight*3, shopBoxWidth, shopBoxHeight};
     Rectangle fifthBuyBox = {1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight};
 
-    Generator cursor("Cursor", 0.2, 10, cursorDispBox, cursorBuyBox, BLUE, DARKBLUE);
-    Generator shane("Shane", 1, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
-    Generator sweater("Offbrand Merch", 3, 500, thirdDispBox, thirdBuyBox, YELLOW, GOLD);
+    Generator cursor("Cursor", 1, 10, cursorDispBox, cursorBuyBox, BLUE, DARKBLUE);
+    Generator shane("Shane", 2, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
+    Generator sweater("Offbrand Merch", 20, 500, thirdDispBox, thirdBuyBox, YELLOW, GOLD);
     
 
     vector<Generator*> generators{&cursor, &shane}; //Has to be pointer so that changes to shane/cursor actually affect the vector
