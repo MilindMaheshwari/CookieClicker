@@ -99,23 +99,9 @@ class Generator{
             DrawText("Buy", buyBox.x, buyBox.y, 22, WHITE);
             DrawText(TextFormat("%.2f", price), buyBox.x+50, buyBox.y, 22, GREEN);
             DrawText(TextFormat("x%d", counter), buyBox.x+150, buyBox.y, 22, DARKGRAY);
-
-
+            DrawText(TextFormat("Produce %.2f CPS each", CPS), buyBox.x, buyBox.y+30, 15, GREEN);
+            DrawText(TextFormat("Producing a total of %.2f CPS", getGeneratorTotalCPS()), buyBox.x, buyBox.y+60, 15, GREEN);
 
         }
 };
 
-// class Cursor : Generator{
-
-//     private:
-//         static int counter;
-//         static float price;
-//         static float CPS;
-
-//     public: 
-
-//         Cursor(string name)
-
-
-
-// };
