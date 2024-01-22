@@ -56,8 +56,11 @@ int main()
 
     Texture2D imageShane = LoadTexture("AssetLibrary/Shane1.png");
     Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
+    Texture2D imageOakClicked = LoadTexture("AssetLibrary/oakridge-clicked.png");
     Texture2D imageCursor = LoadTexture("AssetLibrary/cursor.png");
     Texture2D imageSweater = LoadTexture("AssetLibrary/sweater.png");
+    Texture2D imageSign = LoadTexture("AssetLibrary/Sign.png");
+    Texture2D imageVape = LoadTexture("AssetLibrary/vape.png");
     
     Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
     Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
@@ -67,7 +70,7 @@ int main()
 
     
 
-    vector<Generator*> generators{&cursor, &shane, &sweater, &sign}; //Has to be pointer so that changes to shane/cursor actually affect the vector
+    vector<Generator*> generators{&cursor, &shane, &sweater, &sign, &vape}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
     {
@@ -82,23 +85,6 @@ int main()
             sleep(1); //After it has increased money from all generators, pause for one second
         }
     }); //For generating money while other stuff is happening
-
-
-
-
-    cout << "Hello World" << endl;
-    
-
-    Texture2D imageShane = LoadTexture("AssetLibrary/Shane1.png");
-    Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
-    Texture2D imageOakClicked = LoadTexture("AssetLibrary/oakridge-clicked.png");
-    Texture2D imageCursor = LoadTexture("AssetLibrary/cursor.png");
-    Texture2D imageSweater = LoadTexture("AssetLibrary/sweater.png");
-    Texture2D imageSign = LoadTexture("AssetLibrary/Sign.png");
-    Texture2D imageVape = LoadTexture("AssetLibrary/vape.png");
-
-    Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
-    Rectangle oakCollisionBox = {168, 329, static_cast<float>(imageOak.width), static_cast<float>(imageOak.height)};
 
     bool collision = false;
     double clickStartTime = 0;
