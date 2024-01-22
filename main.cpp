@@ -4,6 +4,7 @@
 #include <thread> 
 #include <vector>
 #include "CookieGeneratorClass.hpp"
+#include "AchievementClass.hpp"
 #include <random>
 
 using namespace std;
@@ -46,11 +47,23 @@ int main()
     Rectangle fourthBuyBox = {1545, 161 + dispBoxHeight*3, shopBoxWidth, shopBoxHeight};
     Rectangle fifthBuyBox = {1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight};
 
-    Generator cursor("Cursor", 0.1, 10, cursorDispBox, cursorBuyBox, BLUE, DARKBLUE);
-    Generator shane("Shane", 1, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
-    Generator sweater("Offbrand Merch", 8, 500, thirdDispBox, thirdBuyBox, YELLOW, GOLD);
-    Generator sign("Sign", 47, 1000, fourthDispBox, fourthBuyBox, BLUE, DARKBLUE);
-    Generator vape("Sign", 260, 2000, fifthDispBox, fifthBuyBox, RED, MAROON);
+    Generator cursor("Cursor", 1, 10, cursorDispBox, cursorBuyBox, BLUE, DARKBLUE);
+    Generator shane("Shane", 2, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
+    Generator sweater("Offbrand Merch", 20, 500, thirdDispBox, thirdBuyBox, YELLOW, GOLD);
+
+
+    Texture2D imageShane = LoadTexture("AssetLibrary/Shane1.png");
+    Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
+    Texture2D imageCursor = LoadTexture("AssetLibrary/cursor.png");
+    Texture2D imageSweater = LoadTexture("AssetLibrary/sweater.png");
+    
+    Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
+    Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
+    Rectangle achievementBox = {200, 500, };
+
+    Achievement bronzeCursor;
+
+    
 
     vector<Generator*> generators{&cursor, &shane, &sweater, &sign}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
@@ -96,7 +109,6 @@ int main()
     while (WindowShouldClose() == false)
     {
         
-        collision = CheckCollisionPointRec(GetMousePosition(), clickBox);
 
 
         totalCPS = 0;
@@ -114,7 +126,7 @@ int main()
         //Draw Counters
         DrawText(TextFormat("%.2f", money), 150, 150, 40, BLUE);
 
-        //Draw Display Boxes
+        //Draw Display and shop Boxes (also polls whether a shop box has been clicked or not)
 
         shane.displayBoxes(money);
         cursor.displayBoxes(money);
@@ -122,7 +134,6 @@ int main()
         sign.displayBoxes(money);
         vape.displayBoxes(money);
 
-        //Draw Shop Boxes
        
 
         DrawText(TextFormat("%.2f", money), 50, 50, 34, RED);
@@ -197,6 +208,20 @@ int main()
         {   
             DrawText(("+ " + to_string(CPC)).c_str(), tempMouseX, tempMouseY - (GetTime() - clickStartTime) * 100, 25, BLACK);
         }
+
+        if(cursor.getCounter() >= 3){
+
+            bronzeCursor.setAchieved();
+            if(bronzeCursor.shouldBeOnScreen()){
+
+                DrawRectangleRec(cursorBuyBox, RED);
+
+            }
+            
+        }        
+
+        DrawText(TextFormat("X: %d, Y: %d", GetMouseX(), GetMouseY()), 500, 500 , 18, BROWN);
+
         EndDrawing();
         
     }
