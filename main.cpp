@@ -59,6 +59,7 @@ int main()
     Texture2D imageSweater = LoadTexture("AssetLibrary/sweater.png");
     Texture2D imageSign = LoadTexture("AssetLibrary/Sign.png");
     Texture2D imageVape = LoadTexture("AssetLibrary/vape.png");
+    Texture2D background = LoadTexture("AssetLibrary/background.png");
 
     Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
     Texture2D imageOakClicked = LoadTexture("AssetLibrary/oakridge-clicked.png");
@@ -85,16 +86,9 @@ int main()
             sleep(1); //After it has increased money from all generators, pause for one second
         }
     }); //For generating money while other stuff is happening
-
-
-
-
-    cout << "Hello World" << endl;
     
-    bool collision = false;
     double clickStartTime = 0;
     bool timerIsStarted = false;
-    double jumpStartTime = 0;
 
     int tempMouseX;
     int tempMouseY;
@@ -115,6 +109,7 @@ int main()
         // Draw
         BeginDrawing();
         ClearBackground(RAYWHITE);
+        DrawTexture(background, 0, 0, WHITE);
 
         //Draw Counters
         DrawText(TextFormat("%.2f", money), 150, 150, 40, BLUE);
