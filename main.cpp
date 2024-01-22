@@ -4,8 +4,17 @@
 #include <thread> 
 #include <vector>
 #include "CookieGeneratorClass.hpp"
+#include <random>
 
 using namespace std;
+
+int generateRandomNumber(int min, int max) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> distribution(min, max);
+
+    return distribution(gen);
+}
 
 int main()
 {   
@@ -15,10 +24,10 @@ int main()
     int dispBoxHeight = 128;
     const int screenWidth = 1920;
     const int screenHeight = 1080;
-
-    double money = 0;   //Should print with 2 decimals, like money usually is
+    //Should print with 2 decimals, like money usually is
     double totalCPS = 0;
-    unsigned long long money = 1000000000;
+    double CPC = 1;
+    double money = 00000000;
 
     //COULD FIND OTHER SOLUTION FOR THIS
 
@@ -37,12 +46,13 @@ int main()
     Rectangle fourthBuyBox = {1545, 161 + dispBoxHeight*3, shopBoxWidth, shopBoxHeight};
     Rectangle fifthBuyBox = {1545, 161 + dispBoxHeight*4, shopBoxWidth, shopBoxHeight};
 
-    Generator cursor("Cursor", 0.2, 10, cursorDispBox, cursorBuyBox, BLUE, DARKBLUE);
+    Generator cursor("Cursor", 0.1, 10, cursorDispBox, cursorBuyBox, BLUE, DARKBLUE);
     Generator shane("Shane", 1, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
-    Generator sweater("Offbrand Merch", 3, 500, thirdDispBox, thirdBuyBox, YELLOW, GOLD);
-    
+    Generator sweater("Offbrand Merch", 8, 500, thirdDispBox, thirdBuyBox, YELLOW, GOLD);
+    Generator sign("Sign", 47, 1000, fourthDispBox, fourthBuyBox, BLUE, DARKBLUE);
+    Generator vape("Sign", 260, 2000, fifthDispBox, fifthBuyBox, RED, MAROON);
 
-    vector<Generator*> generators{&cursor, &shane}; //Has to be pointer so that changes to shane/cursor actually affect the vector
+    vector<Generator*> generators{&cursor, &shane, &sweater, &sign}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
     {
@@ -66,22 +76,23 @@ int main()
 
     Texture2D imageShane = LoadTexture("AssetLibrary/Shane1.png");
     Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
+    Texture2D imageOakClicked = LoadTexture("AssetLibrary/oakridge-clicked.png");
     Texture2D imageCursor = LoadTexture("AssetLibrary/cursor.png");
     Texture2D imageSweater = LoadTexture("AssetLibrary/sweater.png");
-    
+    Texture2D imageSign = LoadTexture("AssetLibrary/Sign.png");
+    Texture2D imageVape = LoadTexture("AssetLibrary/vape.png");
+    Texture2D imageJumpScare = LoadTexture("AssetLibrary/jumpscare.png");
+
     Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
     Rectangle oakCollisionBox = {168, 329, static_cast<float>(imageOak.width), static_cast<float>(imageOak.height)};
 
-
     bool collision = false;
-     
-    Texture2D texture = LoadTexture("AssetLibrary/Shane1.png");
+    double clickStartTime = 0;
+    bool timerIsStarted = false;
+    double jumpStartTime = 0;
 
-    double tempMoney = 8000;
-
-    shane.buyNew(tempMoney);
-    shane.buyNew(tempMoney);
-    shane.buyNew(tempMoney); 
+    int tempMouseX;
+    int tempMouseY;
 
     while (WindowShouldClose() == false)
     {
@@ -109,13 +120,13 @@ int main()
         shane.displayBoxes(money);
         cursor.displayBoxes(money);
         sweater.displayBoxes(money);
+        sign.displayBoxes(money);
+        vape.displayBoxes(money);
 
         //Draw Shop Boxes
        
 
         DrawText(TextFormat("%.2f", money), 50, 50, 34, RED);
-
-        int shaneVar = 5;
 
         int dispVar = 5;
         for (int i = 0; i < cursor.getCounter(); i++)
@@ -141,22 +152,54 @@ int main()
         for (int k = 0; k < sweater.getCounter(); k++)
         {
             dispVar *=-1;
-            if (k < 25)
+            if (k < 22)
             {
                 DrawTexture(imageSweater, 590 + k*40, 175 + dispBoxHeight*2 + dispVar, WHITE);
             }
         }
+        for (int l = 0; l < sign.getCounter(); l++)
+        {
+            dispVar *=-1;
+            if (l < 22)
+            {
+                DrawTexture(imageSign, 590 + l*40, 175 + dispBoxHeight*3 + dispVar, WHITE);
+            }
+        }
+        for (int m = 0; m < vape.getCounter(); m++)
+        {
+            dispVar *=-1;
+            if (m < 21)
+            {
+                DrawTexture(imageVape, 590 + m*40, 175 + dispBoxHeight*4 + dispVar, WHITE);
+            }
+        }
         
         // Draw the texture at the center of the screen
-        DrawTexture(imageOak, oakCollisionBox.x, oakCollisionBox.y, WHITE);
-        
+        if (CheckCollisionPointRec(GetMousePosition(), oakCollisionBox) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+        {
+            DrawTexture(imageOakClicked, oakCollisionBox.x + 39 , oakCollisionBox.y + 35, WHITE);
+        }
+        else
+        {
+            DrawTexture(imageOak, oakCollisionBox.x , oakCollisionBox.y, WHITE);
+        }
         if (CheckCollisionPointRec(GetMousePosition(), oakCollisionBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
+            
             // Handle collision behavior here (e.g., increase money, perform some action, etc.)
-            money++; // Adjust this according to your requirements
+            money+=CPC; // Adjust this according to your requirements
+            clickStartTime = GetTime();
+            timerIsStarted = true;
+            tempMouseX = GetMouseX();
+            tempMouseY = GetMouseY();
+            
         }
-
+        if (timerIsStarted && GetTime() - clickStartTime < 2)
+        {   
+            DrawText(("+ " + to_string(CPC)).c_str(), tempMouseX, tempMouseY - (GetTime() - clickStartTime) * 100, 25, BLACK);
+        }
         EndDrawing();
+        
     }
 
     CloseWindow();

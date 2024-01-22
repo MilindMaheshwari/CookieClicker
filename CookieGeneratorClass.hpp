@@ -11,6 +11,7 @@ class Generator{
     private: 
         string name;        
         double CPS;  //Cookies/Clicks per second
+        double CPC;
         double price;
         int counter;
         Rectangle dispBox;
