@@ -47,9 +47,8 @@ int main()
     
     Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
     Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
-    Rectangle achievementBox = {200, 500, };
 
-    Achievement bronzeCursor;
+    Achievement bronzeCursor("Bronze Cursor", "Bought 3 cursors");
 
     
 
@@ -162,11 +161,7 @@ int main()
         if(cursor.getCounter() >= 3){
 
             bronzeCursor.setAchieved();
-            if(bronzeCursor.shouldBeOnScreen()){
-
-                DrawRectangleRec(cursorBuyBox, RED);
-
-            }
+            bronzeCursor.shouldBeOnScreen();
             
         }        
 
