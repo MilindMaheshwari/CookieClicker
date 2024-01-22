@@ -18,12 +18,12 @@ int generateRandomNumber(int min, int max) {
 
 int main()
 {   
-    int shopBoxWidth = 300;
-    int shopBoxHeight = 128;
-    int dispBoxWidth = 925;
-    int dispBoxHeight = 128;
-    const int screenWidth = 1920;
-    const int screenHeight = 1080;
+    float shopBoxWidth = 300;
+    float shopBoxHeight = 128;
+    float dispBoxWidth = 925;
+    float dispBoxHeight = 128;
+    const float screenWidth = 1920;
+    const float screenHeight = 1080;
     //Should print with 2 decimals, like money usually is
     double totalCPS = 0;
     double CPC = 1;
@@ -81,7 +81,6 @@ int main()
     Texture2D imageSweater = LoadTexture("AssetLibrary/sweater.png");
     Texture2D imageSign = LoadTexture("AssetLibrary/Sign.png");
     Texture2D imageVape = LoadTexture("AssetLibrary/vape.png");
-    Texture2D imageJumpScare = LoadTexture("AssetLibrary/jumpscare.png");
 
     Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
     Rectangle oakCollisionBox = {168, 329, static_cast<float>(imageOak.width), static_cast<float>(imageOak.height)};
