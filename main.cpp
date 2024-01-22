@@ -50,6 +50,8 @@ int main()
     Generator cursor("Cursor", 1, 10, cursorDispBox, cursorBuyBox, BLUE, DARKBLUE);
     Generator shane("Shane", 2, 100, shaneDispBox, shaneBuyBox, RED, MAROON);    
     Generator sweater("Offbrand Merch", 20, 500, thirdDispBox, thirdBuyBox, YELLOW, GOLD);
+    Generator sign("Sign", 47, 1000, fourthDispBox, fourthBuyBox, BLUE, DARKBLUE);
+    Generator vape("Sign", 260, 2000, fifthDispBox, fifthBuyBox, RED, MAROON);
 
 
     Texture2D imageShane = LoadTexture("AssetLibrary/Shane1.png");
