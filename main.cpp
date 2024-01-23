@@ -71,7 +71,7 @@ int main()
 
     
 
-    vector<Generator*> generators{&cursor, &shane, &sweater, &sign}; //Has to be pointer so that changes to shane/cursor actually affect the vector
+    vector<Generator*> generators{&cursor, &shane, &sweater, &sign, &vape}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
     {
@@ -112,7 +112,6 @@ int main()
         DrawTexture(background, 0, 0, WHITE);
 
         //Draw Counters
-        DrawText(TextFormat("%.2f", money), 150, 150, 40, BLUE);
 
         //Draw Display and shop Boxes (also polls whether a shop box has been clicked or not)
 
@@ -124,7 +123,8 @@ int main()
 
        
 
-        DrawText(TextFormat("%.2f", money), 50, 50, 34, RED);
+        DrawText(TextFormat("$ %.2f", money), 50, 50, 34, RED);
+        DrawText(TextFormat("%.2f CPS", totalCPS), 600, 50, 34, BLUE);
 
         int dispVar = 5;
         for (int i = 0; i < cursor.getCounter(); i++)
@@ -194,7 +194,7 @@ int main()
         }
         if (timerIsStarted && GetTime() - clickStartTime < 2)
         {   
-            DrawText(("+ " + to_string(CPC)).c_str(), tempMouseX, tempMouseY - (GetTime() - clickStartTime) * 100, 25, BLACK);
+            DrawText(TextFormat("+ %.2f", CPC), tempMouseX, tempMouseY - (GetTime() - clickStartTime) * 100, 25, BLACK);
         }
 
         if(cursor.getCounter() >= 3){
@@ -213,5 +213,11 @@ int main()
     CloseWindow();
     UnloadTexture(imageShane);
     UnloadTexture(imageOak);
+    UnloadTexture(imageSweater);
+    UnloadTexture(imageSign);
+    UnloadTexture(imageVape);
+    UnloadTexture(background);
+    UnloadTexture(imageOakClicked);
+
     return 0;
 }
