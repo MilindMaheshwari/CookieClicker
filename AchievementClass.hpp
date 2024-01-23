@@ -12,7 +12,7 @@ class Achievement{
 
     private: 
 
-        bool achieved; 
+        bool achieved = false; 
         double startTime;
         string achievementName;
         string achievementMessage;
