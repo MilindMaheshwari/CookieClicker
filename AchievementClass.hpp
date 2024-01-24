@@ -36,7 +36,6 @@ class Achievement{
             if(achieved && (GetTime() - startTime) <= 4){       //If the achievement has been achieved less than four seconds ago, 
             
                 DrawRectangleRec(achievementBox, RED);
-                //DrawTexture();
                 DrawText(TextFormat("%s: %s", achievementName.c_str(), achievementMessage.c_str()), achievementBox.x, achievementBox.y, 12, GREEN);
 
                 return true;
