@@ -67,12 +67,11 @@ int main()
     Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
     Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
 
-    Achievement bronzeCursor("Bronze Cursor", "Bought 5 cursors", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);});
-    Achievement goldCursor("Silver Cursor", "Bought 10 cursors", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);});
+    Achievement bronzeCursor("Bronze Cursor", "Bought 5 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);});
+    Achievement silverCursor("Silver Cursor", "Bought 10 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);});
+    Achievement goldCursor("Silver Cursor", "Bought 20 cursors: Clicking generates 1% of total CPS", [&](){CPC += totalCPS*0.01;});
 
-
-    vector<Achievement*> achievements{&bronzeCursor};  
-
+    vector<Achievement*> achievements{&bronzeCursor, &silverCursor, &goldCursor};  
     vector<Generator*> generators{&cursor, &shane, &sweater, &sign}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
