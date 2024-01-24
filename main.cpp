@@ -82,9 +82,9 @@ int main()
 
     Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
 
-    Achievement bronzeCursor("Bronze Cursor", "Bought 5 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);});
-    Achievement silverCursor("Silver Cursor", "Bought 10 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);});
-    Achievement goldCursor("Silver Cursor", "Bought 20 cursors: Clicking generates 1% of total CPS", [&](){CPC += totalCPS*0.01;});
+    Achievement bronzeCursor("Bronze Cursor", "Bought 5 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);}, true);
+    Achievement silverCursor("Silver Cursor", "Bought 10 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);}, true);
+    Achievement goldCursor("Gold Cursor", "Bought 20 cursors: Clicking generates 1% of total CPS", [&](){CPC += totalCPS*0.01;}, false);
 
     vector<Achievement*> achievements{&bronzeCursor, &silverCursor, &goldCursor};  
     vector<Generator*> generators{&cursor, &shane, &sweater, &sign, &vape}; //Has to be pointer so that changes to shane/cursor actually affect the vector
@@ -149,6 +149,20 @@ int main()
         DrawText(TextFormat("$ %.2f", money), 50, 50, 34, RED);
         DrawText(TextFormat("%.2f CPS", totalCPS), 600, 50, 34, BLUE);
 
+        CPC = 1; //Reset before checking achievements because some achievements change CPC
+
+        bronzeCursor.checkIfAchieved(cursor.getCounter() >= 5);
+        silverCursor.checkIfAchieved(cursor.getCounter() >= 10);
+        goldCursor.checkIfAchieved(cursor.getCounter() >= 15);
+
+        completedAchievements = 0;
+        for(Achievement *achievement : achievements){
+
+            if(achievement->getAchieved()) completedAchievements++;
+        }
+
+
+        
         int dispVar = 5;
         for (int i = 0; i < cursor.getCounter(); i++)
         {
@@ -222,15 +236,6 @@ int main()
         }
         
 
-        bronzeCursor.checkIfAchieved(cursor.getCounter() >= 5);
-        goldCursor.checkIfAchieved(cursor.getCounter() >= 10);
-
-        completedAchievements = 0;
-        for(Achievement *achievement : achievements){
-
-            if(achievement->getAchieved()) completedAchievements++;
-        }
-        
 
 
 

@@ -16,7 +16,7 @@ class Achievement{
         double startTime;
         string achievementName;
         string achievementMessage;
-        
+        bool runOneTime;
 
         function<bool()> condition;  
         function<void()> whatToDo;
@@ -28,11 +28,12 @@ class Achievement{
 
     public:
 
-        Achievement(string achievementName, string achievementMessage, function<void()> whatToDo){
+        Achievement(string achievementName, string achievementMessage, function<void()> whatToDo, bool runOneTime){
 
             this->achievementName = achievementName;
             this->achievementMessage = achievementMessage;
             this->whatToDo = whatToDo;
+            this->runOneTime = runOneTime;
 
         }
 
@@ -58,7 +59,9 @@ class Achievement{
 
                 achieved = true;
                 startTime = GetTime();
-                whatToDo(); //Run the command passed
+
+                if(runOneTime) whatToDo(); //If its supposed to be a one time command (ex. doubling cursor CPS), run the command here (first time)
+
 
             }
             
@@ -66,7 +69,10 @@ class Achievement{
             
                 DrawRectangleRec(achievementBox, RED);
                 DrawText(TextFormat("%s: %s", achievementName.c_str(), achievementMessage.c_str()), achievementBox.x, achievementBox.y, 30, GREEN);
+
             }
+
+            if(!runOneTime && achieved) whatToDo(); //If its supposed to be a repeating command (ex. adding to CPC, which resets everyframe), run the command here (every frame)
 
         }
 
