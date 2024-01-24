@@ -12,7 +12,7 @@ class Achievement{
 
     private: 
 
-        bool achieved; 
+        bool achieved = false; 
         double startTime;
         string achievementName;
         string achievementMessage;
@@ -67,21 +67,11 @@ class Achievement{
                 DrawRectangleRec(achievementBox, RED);
                 DrawText(TextFormat("%s: %s", achievementName.c_str(), achievementMessage.c_str()), achievementBox.x, achievementBox.y, 30, GREEN);
             }
+
         }
 
-        // void setAchieved(){
-            
-        //     if(!achieved){   //If achievement isn't already achieved
-        //         achieved = true;    
-        //         startTime = GetTime();  //Store the current time in the startTime variable
-
-        //         whatToDo();
-
-        //     }
-        // }
-
-        // bool getAchieved(){
-        //     return achieved;
-        // }
+        bool getAchieved(){
+            return achieved;
+        }
 
 };

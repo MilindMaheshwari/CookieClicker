@@ -24,13 +24,13 @@ int main()
     float dispBoxWidth = 925;
     float dispBoxHeight = 128;
     const float screenWidth = 1920;
-    const float screenHeight = 1080;
-    //Should print with 2 decimals, like money usually is
+    const float screenHeight = 1080;    //Should print with 2 decimals, like money usually is
+    
     double totalCPS = 0;
     double CPC = 1;
-    double money = 00000000;
+    double money = 0;
     Music music;
-    //COULD FIND OTHER SOLUTION FOR THIS
+    unsigned short completedAchievements = 0;
     InitAudioDevice();
     
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
@@ -82,10 +82,11 @@ int main()
 
     Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
 
-    Achievement bronzeCursor("Bronze Cursor", "Bought 3 cursors", [&](){CPC*=2;});
+    Achievement bronzeCursor("Bronze Cursor", "Bought 5 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);});
+    Achievement silverCursor("Silver Cursor", "Bought 10 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);});
+    Achievement goldCursor("Silver Cursor", "Bought 20 cursors: Clicking generates 1% of total CPS", [&](){CPC += totalCPS*0.01;});
 
-    
-
+    vector<Achievement*> achievements{&bronzeCursor, &silverCursor, &goldCursor};  
     vector<Generator*> generators{&cursor, &shane, &sweater, &sign, &vape}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
@@ -221,9 +222,15 @@ int main()
         }
         
 
-        bronzeCursor.checkIfAchieved(cursor.getCounter() >= 3);
+        bronzeCursor.checkIfAchieved(cursor.getCounter() >= 5);
+        goldCursor.checkIfAchieved(cursor.getCounter() >= 10);
 
+        completedAchievements = 0;
+        for(Achievement *achievement : achievements){
 
+            if(achievement->getAchieved()) completedAchievements++;
+        }
+        
 
 
 

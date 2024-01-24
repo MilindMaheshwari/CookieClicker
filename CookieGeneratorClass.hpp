@@ -56,8 +56,12 @@ class Generator{
             return CPS * counter;
         }
 
-        int getUnitCPS(){   //How much just one unit produces
+        double getUnitCPS(){   //How much just one unit produces
             return CPS;
+        }
+
+        void setUnitCPS(double newCPS){
+            CPS = newCPS;
         }
 
         int getCounter(){        
