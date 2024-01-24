@@ -86,6 +86,8 @@ int main()
     Achievement silverCursor("Silver Cursor", "Bought 10 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);}, true);
     Achievement goldCursor("Gold Cursor", "Bought 20 cursors: Clicking generates 1% of total CPS", [&](){CPC += totalCPS*0.01;}, false);
 
+    Achievement betaShane("Beta Shane", "Bought 5 shanes: Shane CPS doubled", [&](){shane.setUnitCPS(shane.getUnitCPS()*2);}, true);
+
     vector<Achievement*> achievements{&bronzeCursor, &silverCursor, &goldCursor};  
     vector<Generator*> generators{&cursor, &shane, &sweater, &sign, &vape}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
