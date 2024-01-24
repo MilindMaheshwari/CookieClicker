@@ -67,7 +67,7 @@ int main()
     Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
     Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
 
-    Achievement bronzeCursor("Bronze Cursor", "Bought 3 cursors");
+    Achievement bronzeCursor("Bronze Cursor", "Bought 3 cursors", [&](){CPC*=2;});
 
     
 
@@ -196,13 +196,13 @@ int main()
         {   
             DrawText(TextFormat("+ %.2f", CPC), tempMouseX, tempMouseY - (GetTime() - clickStartTime) * 100, 25, BLACK);
         }
+        
 
-        if(cursor.getCounter() >= 3){
+        bronzeCursor.checkIfAchieved(cursor.getCounter() >= 3);
 
-            bronzeCursor.setAchieved();
-            bronzeCursor.shouldBeOnScreen();
-            
-        }        
+
+
+
 
         DrawText(TextFormat("X: %d, Y: %d", GetMouseX(), GetMouseY()), 500, 500 , 18, BROWN);
 
