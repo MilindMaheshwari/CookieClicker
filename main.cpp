@@ -29,11 +29,27 @@ int main()
     double totalCPS = 0;
     double CPC = 1;
     double money = 00000000;
-
+    Music music;
     //COULD FIND OTHER SOLUTION FOR THIS
-
+    InitAudioDevice();
+    
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
     SetTargetFPS(60);
+    int randNum = generateRandomNumber(1, 3);
+    if (randNum == 1)
+    {
+        music = LoadMusicStream("AssetLibrary/Chorus.wav");
+    }
+    else if (randNum == 2)
+    {
+        music = LoadMusicStream("AssetLibrary/Drake-Fair-Trade.wav");
+    }
+    else if(randNum == 3)
+    {
+        music = LoadMusicStream("AssetLibrary/Brass-Monkey.wav");
+    }
+
+    PlayMusicStream(music);
     
     Rectangle cursorDispBox = {590, 161, dispBoxWidth, dispBoxHeight};
     Rectangle shaneDispBox = {590, 161 + dispBoxHeight, dispBoxWidth, dispBoxHeight};
@@ -55,16 +71,15 @@ int main()
 
 
     Texture2D imageShane = LoadTexture("AssetLibrary/Shane1.png");
+    Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
+    Texture2D imageOakClicked = LoadTexture("AssetLibrary/oakridge-clicked.png");
     Texture2D imageCursor = LoadTexture("AssetLibrary/cursor.png");
     Texture2D imageSweater = LoadTexture("AssetLibrary/sweater.png");
     Texture2D imageSign = LoadTexture("AssetLibrary/Sign.png");
     Texture2D imageVape = LoadTexture("AssetLibrary/vape.png");
     Texture2D background = LoadTexture("AssetLibrary/background.png");
 
-    Texture2D imageOak = LoadTexture("AssetLibrary/oakridge.png");
-    Texture2D imageOakClicked = LoadTexture("AssetLibrary/oakridge-clicked.png");
 
-    Rectangle clickBox = {10, GetScreenHeight()/2.0f - 50, 200, 100};
     Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
 
     Achievement bronzeCursor("Bronze Cursor", "Bought 3 cursors", [&](){CPC*=2;});
@@ -95,7 +110,7 @@ int main()
 
     while (WindowShouldClose() == false)
     {
-        
+        UpdateMusicStream(music);
 
 
         totalCPS = 0;
@@ -114,14 +129,21 @@ int main()
         //Draw Counters
 
         //Draw Display and shop Boxes (also polls whether a shop box has been clicked or not)
+        
+
 
         shane.displayBoxes(money);
         cursor.displayBoxes(money);
         sweater.displayBoxes(money);
         sign.displayBoxes(money);
         vape.displayBoxes(money);
+        DrawTexture(imageCursor, 1775, 161, WHITE);
+        DrawTexture(imageShane, 1775, 289, WHITE);
+        DrawTexture(imageSweater, 1775, 417, WHITE);
+        DrawTexture(imageSign, 1775, 545, WHITE);
+        DrawTexture(imageVape, 1775, 673, WHITE);
+        
 
-       
 
         DrawText(TextFormat("$ %.2f", money), 50, 50, 34, RED);
         DrawText(TextFormat("%.2f CPS", totalCPS), 600, 50, 34, BLUE);
@@ -184,6 +206,7 @@ int main()
         if (CheckCollisionPointRec(GetMousePosition(), oakCollisionBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
             
+            
             // Handle collision behavior here (e.g., increase money, perform some action, etc.)
             money+=CPC; // Adjust this according to your requirements
             clickStartTime = GetTime();
@@ -218,6 +241,6 @@ int main()
     UnloadTexture(imageVape);
     UnloadTexture(background);
     UnloadTexture(imageOakClicked);
-
+    UnloadMusicStream(music);
     return 0;
 }
