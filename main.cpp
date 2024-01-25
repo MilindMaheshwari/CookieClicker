@@ -82,11 +82,13 @@ int main()
 
     Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
 
-    Achievement bronzeCursor("Bronze Cursor", "Bought 5 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);}, true);
-    Achievement silverCursor("Silver Cursor", "Bought 10 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);}, true);
-    Achievement goldCursor("Gold Cursor", "Bought 20 cursors: Clicking generates 1% of total CPS", [&](){CPC += totalCPS*0.01;}, false);
+    Achievement bronzeCursor("Bronze Cursor", "Bought 5 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);}, false);
+    Achievement silverCursor("Silver Cursor", "Bought 10 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);}, false);
+    Achievement goldCursor("Gold Cursor", "Bought 20 cursors: Clicking generates 1% of total CPS", [&](){CPC += totalCPS*0.01;}, true);    //Has to repeat cause CPC resets each time, so that these can compound
 
-    Achievement betaShane("Beta Shane", "Bought 5 shanes: Shane CPS doubled", [&](){shane.setUnitCPS(shane.getUnitCPS()*2);}, true);
+    Achievement betaShane("Beta Shane", "Bought 5 Shanes: Shane CPS doubled", [&](){shane.setUnitCPS(shane.getUnitCPS()*2);}, false);
+    Achievement alphaShane("Alpha Shane", "Bought 10 Shanes: Shane CPS doubled", [&](){shane.setUnitCPS(shane.getUnitCPS()*2);}, false);
+    Achievement sigmaShane("Sigma Shane", "Bought 20 Shanes: Clicking generates +2% of total CPS", [&](){CPC += totalCPS*0.01;}, true);
 
     vector<Achievement*> achievements{&bronzeCursor, &silverCursor, &goldCursor};  
     vector<Generator*> generators{&cursor, &shane, &sweater, &sign, &vape}; //Has to be pointer so that changes to shane/cursor actually affect the vector

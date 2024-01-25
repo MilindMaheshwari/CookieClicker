@@ -16,7 +16,7 @@ class Achievement{
         double startTime;
         string achievementName;
         string achievementMessage;
-        bool runOneTime;
+        bool runRepeatedly;
 
         function<bool()> condition;  
         function<void()> whatToDo;
@@ -28,12 +28,12 @@ class Achievement{
 
     public:
 
-        Achievement(string achievementName, string achievementMessage, function<void()> whatToDo, bool runOneTime){
+        Achievement(string achievementName, string achievementMessage, function<void()> whatToDo, bool runRepeatedly){
 
             this->achievementName = achievementName;
             this->achievementMessage = achievementMessage;
             this->whatToDo = whatToDo;
-            this->runOneTime = runOneTime;
+            this->runRepeatedly = runRepeatedly;
 
         }
 
@@ -60,7 +60,7 @@ class Achievement{
                 achieved = true;
                 startTime = GetTime();
 
-                if(runOneTime) whatToDo(); //If its supposed to be a one time command (ex. doubling cursor CPS), run the command here (first time)
+                if(!runRepeatedly) whatToDo(); //If its supposed to be a one time command (ex. doubling cursor CPS), run the command here (first time)
 
 
             }
@@ -72,7 +72,7 @@ class Achievement{
 
             }
 
-            if(!runOneTime && achieved) whatToDo(); //If its supposed to be a repeating command (ex. adding to CPC, which resets everyframe), run the command here (every frame)
+            if(runRepeatedly && achieved) whatToDo(); //If its supposed to be a repeating command (ex. adding to CPC, which resets everyframe), run the command here (every frame)
 
         }
 
