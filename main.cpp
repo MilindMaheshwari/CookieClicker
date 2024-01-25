@@ -24,13 +24,13 @@ int main()
     float dispBoxWidth = 925;
     float dispBoxHeight = 128;
     const float screenWidth = 1920;
-    const float screenHeight = 1080;
-    //Should print with 2 decimals, like money usually is
+    const float screenHeight = 1080;    //Should print with 2 decimals, like money usually is
+    
     double totalCPS = 0;
     double CPC = 1;
-    double money = 00000000;
+    double money = 0;
     Music music;
-    //COULD FIND OTHER SOLUTION FOR THIS
+    unsigned short completedAchievements = 0;
     InitAudioDevice();
     
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
@@ -82,13 +82,15 @@ int main()
 
     Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
 
-    Achievement bronzeCursor("Bronze Cursor", "Bought 10 cursors", [&](){CPC*=2;});
-    Achievement silverCursor("Silver Cursor", "Bought 25 cursors", [&](){CPC*=2;});
-    Achievement goldCursor("Gold Cursor", "Bought 100 cursors", [&](){CPC*=2;});
+    Achievement bronzeCursor("Bronze Cursor", "Bought 5 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);}, false, imageCursor, BROWN);
+    Achievement silverCursor("Silver Cursor", "Bought 10 cursors: Cursor CPS doubled", [&](){cursor.setUnitCPS(cursor.getUnitCPS()*2);}, false, imageCursor, GRAY);
+    Achievement goldCursor("Gold Cursor", "Bought 20 cursors: Clicking generates 1% of total CPS", [&](){CPC += totalCPS*0.01;}, true, imageCursor, GOLD);    //Has to repeat cause CPC resets each time, so that these can compound
 
+    Achievement betaShane("Beta Shane", "Bought 5 Shanes: Shane CPS doubled", [&](){shane.setUnitCPS(shane.getUnitCPS()*2);}, false, imageShane, BROWN);
+    Achievement alphaShane("Alpha Shane", "Bought 10 Shanes: Shane CPS doubled", [&](){shane.setUnitCPS(shane.getUnitCPS()*2);}, false, imageShane, GRAY);
+    Achievement sigmaShane("Sigma Shane", "Bought 20 Shanes: Clicking generates +2% of total CPS", [&](){CPC += totalCPS*0.01;}, true, imageShane, GOLD);
 
-    
-
+    vector<Achievement*> achievements{&bronzeCursor, &silverCursor, &goldCursor};  
     vector<Generator*> generators{&cursor, &shane, &sweater, &sign, &vape}; //Has to be pointer so that changes to shane/cursor actually affect the vector
 
     thread moneyGenerationThr([&]()     //Money and generators can be accesed by reference
@@ -151,6 +153,20 @@ int main()
         DrawText(TextFormat("$ %.2f", money), 50, 50, 34, RED);
         DrawText(TextFormat("%.2f CPS", totalCPS), 600, 50, 34, BLUE);
 
+        CPC = 1; //Reset before checking achievements because some achievements change CPC
+
+        bronzeCursor.checkIfAchieved(cursor.getCounter() >= 5);
+        silverCursor.checkIfAchieved(cursor.getCounter() >= 10);
+        goldCursor.checkIfAchieved(cursor.getCounter() >= 15);
+
+        completedAchievements = 0;
+        for(Achievement *achievement : achievements){
+
+            if(achievement->getAchieved()) completedAchievements++;
+        }
+
+
+        
         int dispVar = 5;
         for (int i = 0; i < cursor.getCounter(); i++)
         {
@@ -224,9 +240,8 @@ int main()
         }
         
 
-        bronzeCursor.checkIfAchieved(cursor.getCounter() >= 10, imageCursor, BROWN);
-        silverCursor.checkIfAchieved(cursor.getCounter() >= 25, imageCursor, GRAY);
-        goldCursor.checkIfAchieved(cursor.getCounter() >= 100, imageCursor, GOLD);
+        bronzeCursor.checkIfAchieved(cursor.getCounter() >= 3);
+
 
 
 
