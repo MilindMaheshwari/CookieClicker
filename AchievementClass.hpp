@@ -36,23 +36,7 @@ class Achievement{
 
         }
 
-
-        // bool shouldBeOnScreen(){
-
-        //     if(achieved && (GetTime() - startTime) <= 4){       //If the achievement has been achieved less than four seconds ago, 
-            
-        //         DrawRectangleRec(achievementBox, RED);
-        //         DrawText(TextFormat("%s: %s", achievementName.c_str(), achievementMessage.c_str()), achievementBox.x, achievementBox.y, 12, GREEN);
-
-        //         return true;
-        //     }
-        //     else{                   //If the achievement hasn't been reached yet OR its been more than 4 seconds, 
-        //         return false;
-        //     }
-
-        // }
-
-        void checkIfAchieved(bool conditionReached){
+        void checkIfAchieved(bool conditionReached, Texture2D image, Color color){
 
             if(!achieved && conditionReached){
 
@@ -64,7 +48,8 @@ class Achievement{
             
             if(achieved && (GetTime() - startTime) <= 4){       //If the achievement has been achieved less than four seconds ago, 
             
-                DrawRectangleRec(achievementBox, RED);
+                DrawRectangleRec(achpotaievementBox, RED);
+                DrawTexture(image, 590, 850, color);
                 DrawText(TextFormat("%s: %s", achievementName.c_str(), achievementMessage.c_str()), achievementBox.x, achievementBox.y, 30, GREEN);
             }
         }

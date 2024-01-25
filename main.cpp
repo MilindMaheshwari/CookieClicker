@@ -82,7 +82,10 @@ int main()
 
     Rectangle oakCollisionBox = {168, 329, imageOak.width, imageOak.height};
 
-    Achievement bronzeCursor("Bronze Cursor", "Bought 3 cursors", [&](){CPC*=2;});
+    Achievement bronzeCursor("Bronze Cursor", "Bought 10 cursors", [&](){CPC*=2;});
+    Achievement silverCursor("Silver Cursor", "Bought 25 cursors", [&](){CPC*=2;});
+    Achievement goldCursor("Gold Cursor", "Bought 100 cursors", [&](){CPC*=2;});
+
 
     
 
@@ -221,8 +224,9 @@ int main()
         }
         
 
-        bronzeCursor.checkIfAchieved(cursor.getCounter() >= 3);
-
+        bronzeCursor.checkIfAchieved(cursor.getCounter() >= 10, imageCursor, BROWN);
+        silverCursor.checkIfAchieved(cursor.getCounter() >= 25, imageCursor, GRAY);
+        goldCursor.checkIfAchieved(cursor.getCounter() >= 100, imageCursor, GOLD);
 
 
 
